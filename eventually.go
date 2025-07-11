@@ -16,11 +16,11 @@ type Observable[T any] interface {
 	Subscribe(ctx context.Context, buffer int) (<-chan T, func())
 }
 
-func MakeObservable[T any]() *observable[T] {
+func MakeObservable[T any]() Observable[T] {
 	return MakeObservableWithMode[T](Block)
 }
 
-func MakeObservableWithMode[T any](mode BackpressureMode) *observable[T] {
+func MakeObservableWithMode[T any](mode BackpressureMode) Observable[T] {
 	return &observable[T]{
 		mode:        mode,
 		subscribers: make(map[chan T]struct{}),
